@@ -44,5 +44,5 @@ spec:
 
   issuerRef:
     name: knative-eventing-ca-issuer
-    kind: ClusterIssuer
-    group: cert-manager.io
+    kind: AWSPCAClusterIssuer
+    group: awspca.cert-manager.io
