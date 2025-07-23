@@ -73,7 +73,7 @@
     <dependency>
       <groupId>commons-codec</groupId>
       <artifactId>commons-codec</artifactId>
-      <version>1.17.2</version>
+      <version>1.18.0</version>
     </dependency>
 
     <dependency>
@@ -208,6 +208,23 @@
     <dependency>
       <groupId>com.google.protobuf</groupId>
       <artifactId>protobuf-java-util</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>software.amazon.msk</groupId>
+      <artifactId>aws-msk-iam-auth</artifactId>
+      <version>2.3.2</version>
+    </dependency>
+    <dependency>
+      <!-- Not sure why this has to be explictly added.
+        Error:
+        Failed to reconcile contract generation contractGeneration=2
+        Caused by: org.apache.kafka.common.KafkaException: java.lang.NoClassDefFoundError: Could not initialize class software.amazon.awssdk.http.apache.internal.conn.SdkTlsSocketFactory
+        Caused by: java.lang.NoClassDefFoundError: Could not initialize class software.amazon.awssdk.http.apache.internal.conn.SdkTlsSocketFactory
+        Caused by: java.lang.ExceptionInInitializerError: Exception java.lang.NoClassDefFoundError: org/apache/commons/logging/LogFactory [in thread \"vert.x-eventloop-thread-0\"]-->
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.2</version>
     </dependency>
 
     <dependency>

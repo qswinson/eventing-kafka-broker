@@ -160,6 +160,7 @@ class KubernetesCredentials implements Credentials {
                 case "PLAIN" -> "PLAIN";
                 case "SCRAM-SHA-256" -> "SCRAM-SHA-256";
                 case "SCRAM-SHA-512" -> "SCRAM-SHA-512";
+                case "OAUTHBEARER" -> "OAUTHBEARER";
                 default -> null;};
         }
         return this.SASLMechanism;
