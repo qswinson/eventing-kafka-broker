@@ -237,7 +237,7 @@ function install_control_plane_from_source() {
   # Restore test config.
   kubectl replace -f ./test/config/100-config-tracing.yaml
   kubectl replace -f ./test/config/100-config-kafka-features.yaml
-  
+
 }
 
 function install_latest_release_source() {
@@ -431,6 +431,11 @@ function build_monitoring_artifacts_source() {
 }
 
 function create_tls_secrets() {
+  if [ "${SKIP_CREATE_SECRETS}" == "true" ]; then
+    echo "Skipping creation of TLS secrets"
+    return 0
+  fi
+
   ca_cert_secret="my-cluster-cluster-ca-cert"
   tls_user="my-tls-user"
 
@@ -453,6 +458,11 @@ function create_tls_secrets() {
 }
 
 function create_sasl_secrets() {
+  if [ "${SKIP_CREATE_SECRETS}" == "true" ]; then
+    echo "Skipping creation of SASL secrets"
+    return 0
+  fi
+
   ca_cert_secret="my-cluster-cluster-ca-cert"
   sasl_user="my-sasl-user"
 
