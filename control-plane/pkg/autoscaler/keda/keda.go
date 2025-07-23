@@ -119,6 +119,8 @@ func GenerateTriggerAuthentication(cg *kafkainternals.ConsumerGroup, secretData 
 			secret.StringData["sasl"] = "scram_sha512"
 		case "PLAIN":
 			secret.StringData["sasl"] = "plaintext"
+		case "OAUTHBEARER":
+			secret.StringData["sasl"] = "oauthbearer"
 		default:
 			return nil, nil, fmt.Errorf("SASL type value %q is not supported", *saslType)
 		}
@@ -150,6 +152,8 @@ func GenerateTriggerAuthentication(cg *kafkainternals.ConsumerGroup, secretData 
 
 			secretTargetRefs = addAuthSecretTargetRef("username", cg.Spec.Template.Spec.Auth.NetSpec.SASL.User, secretTargetRefs)
 			secretTargetRefs = addAuthSecretTargetRef("password", cg.Spec.Template.Spec.Auth.NetSpec.SASL.Password, secretTargetRefs)
+			secretTargetRefs = addAuthSecretTargetRef("type", cg.Spec.Template.Spec.Auth.NetSpec.SASL.Type, secretTargetRefs)
+			secretTargetRefs = addAuthSecretTargetRef("tokenProvider", cg.Spec.Template.Spec.Auth.NetSpec.SASL.TokenProvider, secretTargetRefs)
 
 			triggerAuth.Spec.SecretTargetRef = secretTargetRefs
 		}
@@ -183,6 +187,12 @@ func GenerateTriggerAuthentication(cg *kafkainternals.ConsumerGroup, secretData 
 
 			password := kedav1alpha1.AuthSecretTargetRef{Parameter: "password", Name: secret.Name, Key: security.SaslPasswordKey}
 			secretTargetRefs = append(secretTargetRefs, password)
+
+			typeRef := kedav1alpha1.AuthSecretTargetRef{Parameter: "type", Name: secret.Name, Key: security.SaslTypeKey}
+			secretTargetRefs = append(secretTargetRefs, typeRef)
+
+			tokenProvider := kedav1alpha1.AuthSecretTargetRef{Parameter: "tokenProvider", Name: secret.Name, Key: security.SaslTokenProviderKey}
+			secretTargetRefs = append(secretTargetRefs, tokenProvider)
 		}
 
 		if caCertValue, ok := secret.Data[security.CaCertificateKey]; ok && string(caCertValue) != "" { // TLS enabled

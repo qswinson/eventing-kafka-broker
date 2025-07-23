@@ -7,10 +7,11 @@
 package contract
 
 import (
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
+
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -224,6 +225,8 @@ const (
 	SecretField_USER_KEY       SecretField = 3
 	SecretField_USER           SecretField = 4
 	SecretField_PASSWORD       SecretField = 5
+	SecretField_TYPE           SecretField = 6
+	SecretField_TOKEN_PROVIDER SecretField = 7
 )
 
 // Enum value maps for SecretField.
@@ -235,6 +238,8 @@ var (
 		3: "USER_KEY",
 		4: "USER",
 		5: "PASSWORD",
+		6: "TYPE",
+		7: "TOKEN_PROVIDER",
 	}
 	SecretField_value = map[string]int32{
 		"SASL_MECHANISM": 0,
@@ -243,6 +248,8 @@ var (
 		"USER_KEY":       3,
 		"USER":           4,
 		"PASSWORD":       5,
+		"TYPE":           6,
+		"TOKEN_PROVIDER": 7,
 	}
 )
 
@@ -2095,6 +2102,7 @@ type Resource_AuthSecret struct {
 	//	user.key: <User PEM key>
 	//	user: <SASL username>
 	//	password: <SASL password>
+	//	tokenProvider: <OIDC token provider>
 	//
 	// Validation:
 	//   - protocol=PLAINTEXT
